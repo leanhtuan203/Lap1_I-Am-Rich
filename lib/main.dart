@@ -9,7 +9,7 @@ void main() {
         appBar: AppBar(
           title: const Center(
             child: Text(
-              'Dicee',
+              'Dice',
               style: TextStyle(
                 color: Colors.white,
             ),
