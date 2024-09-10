@@ -1,95 +1,132 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
+import 'package:audioplayers/audioplayers.dart';
 
 void main() {
-  return runApp(
-    MaterialApp(
+  return runApp(const PianoKidApp());
+}
+
+class PianoKidApp extends StatelessWidget {
+  const PianoKidApp({super.key});
+  static AudioPlayer player = AudioPlayer();
+
+  void playAudio(String fileName){
+    player.play(AssetSource(fileName));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Colors.red,
-        appBar: AppBar(
-          title: const Center(
-            child: Text(
-              'Dice',
-              style: TextStyle(
-                color: Colors.white,
+        backgroundColor: Colors.black,
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            PianoButton(onKeyPress: () {},),
+            PianoButtonWithSuperKey(
+              onMainKeyPress: () {},
+              onSuperKeyPress: () {},
             ),
+            PianoButtonWithSuperKey(
+              onMainKeyPress: () {},
+              onSuperKeyPress: () {},
             ),
-          ),
-          backgroundColor: Colors.red,
+            PianoButtonWithSuperKey(
+              onMainKeyPress: () {},
+              onSuperKeyPress: () {},
+            ),
+            PianoButton(onKeyPress: () {},),
+            PianoButtonWithSuperKey(
+              onMainKeyPress: () {},
+              onSuperKeyPress: () {},
+            ),
+            PianoButtonWithSuperKey(
+              onMainKeyPress: () {},
+              onSuperKeyPress: () {},
+            ),
+          ],
         ),
-        body: DicePage(),
-      ),
-    ),
-  );
-}
-
-class DicePage extends StatefulWidget {
-  const DicePage({super.key});
-
-  @override
-  State<DicePage> createState() => _DicePageState();
-}
-
-class _DicePageState extends State<DicePage> {
-  int leftDiceNumber = 1;
-  int rightDiceNumber = 1;
-
-  void randomDice(){
-    setState(() {
-      leftDiceNumber = Random().nextInt(6)+1;
-      rightDiceNumber = Random().nextInt(6)+1;
-    });
-  }
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Row(
-        children: [
-          Expanded(
-            child: TextButton(
-              onPressed: randomDice,
-              child: Image.asset('images/dice$leftDiceNumber.png'),
-            ),
-          ),
-          Expanded(
-            child: TextButton(
-              onPressed: randomDice,
-              child: Image.asset('images/dice$rightDiceNumber.png'),
-            ),
-          ),
-        ],
       ),
     );
   }
 }
 
-
-/*class DicePage extends StatelessWidget {
-
-  int leftDiceNumber = 5;
+class PianoButtonWithSuperKey extends StatelessWidget {
+  final Function onMainKeyPress;
+  final Function onSuperKeyPress;
+  const PianoButtonWithSuperKey({
+    super.key, required this.onMainKeyPress, required this.onSuperKeyPress,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Row(
+    return Expanded(
+      flex: 1,
+      child: Stack(//Các widget con trong Stack sẽ được xếp chồng lên nhau theo thứ tự
+        clipBehavior: Clip.none,
         children: [
-          Expanded(
-            child: TextButton(
-              onPressed: () {
-              },
-              child: Image.asset('images/dice$leftDiceNumber.png'),
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0, bottom: 2.0, top: 2.0),
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {onMainKeyPress;},
+                style: ElevatedButton.styleFrom(
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero, // Đặt góc bo bằng 0
+                    ),
+                  ),
+                child: null),
             ),
           ),
-          Expanded(
-            child: TextButton(
-              onPressed: () {
-
-              },
-              child: Image.asset('images/dice1.png'),
+          Positioned(//được sd bên trong một widget Stack để xác định vị trí chính xác của một widget con
+            top: -25.0,
+            child: Container(
+              width: 250.0,
+              height: 50.0,
+              child: ElevatedButton(
+                onPressed: () {onSuperKeyPress;},
+                style: ElevatedButton.styleFrom(
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero, // Đặt góc bo bằng 0
+                    ),
+                  backgroundColor: Colors.black
+                ),
+                child: null,
+              ),
             ),
           ),
         ],
-      ),
+      )
     );
   }
-}*/
+}
+
+class PianoButton extends StatelessWidget {
+  final Function onKeyPress;
+  const PianoButton({super.key, required this.onKeyPress});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+        flex: 1,
+        child: Padding(
+          padding: const EdgeInsets.only(right: 8.0, bottom: 2.0, top: 2.0),
+          child: SizedBox(
+            width: double.infinity,
+            height: double.infinity,
+            child: ElevatedButton(
+                onPressed: () {onKeyPress;},
+                style: ElevatedButton.styleFrom(
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.zero, // Đặt góc bo bằng 0
+                  ),
+                ),
+                child: null),
+          ),
+        )
+    );
+  }
+}
+
