@@ -60,21 +60,19 @@ class XylophoneApp extends StatelessWidget {
       home: Scaffold(
         backgroundColor: Colors.black,
         body: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              buildKey(Colors.red, 1),
-              buildKey(Colors.orange, 2),
-              buildKey(Colors.yellow, 3),
-              buildKey(Colors.green, 4),
-              buildKey(Colors.teal, 5),
-              buildKey(Colors.blue, 6),
-              buildKey(Colors.purple, 7),
-            ],
-          )),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                buildKey(Colors.red, 1),
+                buildKey(Colors.orange, 2),
+                buildKey(Colors.yellow, 3),
+                buildKey(Colors.green, 4),
+                buildKey(Colors.teal, 5),
+                buildKey(Colors.blue, 6),
+                buildKey(Colors.purple, 7),
+              ],
+            )),
       ),
     );
   }
 }
-
-
