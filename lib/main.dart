@@ -1,95 +1,78 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
+import 'package:audioplayers/audioplayers.dart';
 
 void main() {
-  return runApp(
-    MaterialApp(
+  return runApp(const XylophoneApp());
+}
+
+// class XylophoneApp extends StatelessWidget {
+//   const XylophoneApp({super.key});
+//
+//   void playSound(int soundNumber){
+//     final player = AudioPlayer();
+//     player.play(AssetSource('note$soundNumber.wav'));
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: Scaffold(
+//         body: SafeArea(
+//           child: Column(
+//             children: [
+//               TextButton(
+//                 onPressed: () {},
+//                 child: child),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+class XylophoneApp extends StatelessWidget {
+  const XylophoneApp({super.key});
+
+  void playSound(int soundNumber){
+    final player = AudioPlayer();
+    player.play(AssetSource('note$soundNumber.wav'));
+  }
+
+  Expanded buildKey(Color color, int soundNumber){
+    return Expanded(
+        flex: 1,
+        child: ElevatedButton(
+            onPressed: () {playSound(soundNumber);},
+            style: ElevatedButton.styleFrom(
+              backgroundColor: color,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.zero, // Đặt góc bo bằng 0
+              ),
+            ),
+            child: null)
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Colors.red,
-        appBar: AppBar(
-          title: const Center(
-            child: Text(
-              'Dicee',
-              style: TextStyle(
-                color: Colors.white,
-            ),
-            ),
-          ),
-          backgroundColor: Colors.red,
-        ),
-        body: DicePage(),
-      ),
-    ),
-  );
-}
-
-class DicePage extends StatefulWidget {
-  const DicePage({super.key});
-
-  @override
-  State<DicePage> createState() => _DicePageState();
-}
-
-class _DicePageState extends State<DicePage> {
-  int leftDiceNumber = 1;
-  int rightDiceNumber = 1;
-
-  void randomDice(){
-    setState(() {
-      leftDiceNumber = Random().nextInt(6)+1;
-      rightDiceNumber = Random().nextInt(6)+1;
-    });
-  }
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Row(
-        children: [
-          Expanded(
-            child: TextButton(
-              onPressed: randomDice,
-              child: Image.asset('images/dice$leftDiceNumber.png'),
-            ),
-          ),
-          Expanded(
-            child: TextButton(
-              onPressed: randomDice,
-              child: Image.asset('images/dice$rightDiceNumber.png'),
-            ),
-          ),
-        ],
+        backgroundColor: Colors.black,
+        body: SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                buildKey(Colors.red, 1),
+                buildKey(Colors.orange, 2),
+                buildKey(Colors.yellow, 3),
+                buildKey(Colors.green, 4),
+                buildKey(Colors.teal, 5),
+                buildKey(Colors.blue, 6),
+                buildKey(Colors.purple, 7),
+              ],
+            )),
       ),
     );
   }
 }
-
-
-/*class DicePage extends StatelessWidget {
-
-  int leftDiceNumber = 5;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Row(
-        children: [
-          Expanded(
-            child: TextButton(
-              onPressed: () {
-              },
-              child: Image.asset('images/dice$leftDiceNumber.png'),
-            ),
-          ),
-          Expanded(
-            child: TextButton(
-              onPressed: () {
-
-              },
-              child: Image.asset('images/dice1.png'),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}*/
